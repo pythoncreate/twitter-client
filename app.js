@@ -11,6 +11,7 @@ app.set('view engine', 'pug');
 var friends = [];
 var tweets = [];
 var screen_name = [];
+var user_data = [];
 
 
 //create new twitter application that generates keys and 
@@ -19,19 +20,17 @@ const Twit = require('twit');
 
 const user = new Twit(config);
 
-user.get('account/verify_credentials', { skip_status: true })
-  .catch(function (err) {
-    console.log('caught error', err.stack)
-  })
-  .then(function (result) {
+user.get('account/verify_credentials', { skip_status: true },
+ 	function (e, data, result) {
     // `result` is an Object with keys "data" and "resp". 
     // `data` and `resp` are the same objects as the ones passed 
     // to the callback. 
     // See https://github.com/ttezel/twit#tgetpath-params-callback 
     // for details. 
- 
-    var screen_name = result.data.screen_name;
-  })
+ 	user_data = data;
+    screen_name = data.screen_name;
+    console.log(user_data);
+});
 
 user.get('statuses/user_timeline', { screen_name: screen_name, count: 5},
 	function(e, data, result) {
@@ -48,14 +47,15 @@ user.get('friends/list', { screen_name: screen_name, count: 5},
 user.get('direct_messages', { screen_name: screen_name, count: 5},
 	function(e,data,result) {
 	dms = data;
-	console.log(dms);
 });
 
 app.use('/', (req, res) => {
 	res.render('index', {
 		tweets: tweets,
 		friends: friends,
-		dms: dms
+		dms: dms,
+		screen_name: screen_name,
+		user_data: user_data
 	});
 });
 
