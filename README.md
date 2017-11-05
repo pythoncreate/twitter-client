@@ -14,4 +14,5 @@ In order to run the program please run the following commands:
 <br/>
 <strong>npm start</strong>
 <br/>
+<p>
 To view the application open your web browser and browse to http://localhost:3000/
