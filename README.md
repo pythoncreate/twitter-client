@@ -7,3 +7,10 @@ In this project, you'll use Twitter’s REST API to access your Twitter profile 
 Your 5 most recent tweets.
 Your 5 most recent friends.
 Your 5 most recent private messages.
+
+In order to run the program please run the following commands:
+
+npm install
+npm start
+
+To view the application open your web browser and browse to http://localhost:3000/
